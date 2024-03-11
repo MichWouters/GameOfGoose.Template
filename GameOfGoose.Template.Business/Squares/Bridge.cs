@@ -11,6 +11,7 @@ namespace GameOfGoose.Template.Business.Squares
 
         public void HandlePlayer(IPlayer player)
         {
+            Logger.Log($"{player.Name} is taking a shortcut over the bridge! Move to square 12");
             player.MoveTo(12);
         }
     }

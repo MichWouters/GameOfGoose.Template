@@ -14,8 +14,6 @@ namespace GameOfGoose.Template.Business.Tests
         /// </summary>
         /// <param name="startPosition">The position where the player starts</param>
         /// <param name="diceRoll">The amount the player rolled</param>
-        /// <param name="squarePosition">The position of the square where the player will land</param>
-        /// <param name="squareType">The type of the square where the player will land</param>
         /// <returns></returns>
         internal IPlayer SetupTestCase(int startPosition, int[] diceRoll)
         {

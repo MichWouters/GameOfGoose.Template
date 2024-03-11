@@ -11,6 +11,7 @@ internal class Inn(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
-        throw new NotImplementedException();
+        Logger.Log($"{player.Name} is spending an evening at the inn. Skip one turn.");
+        player.TurnsToSkip = 1;
     }
 }

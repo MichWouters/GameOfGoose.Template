@@ -11,6 +11,7 @@ internal class Death(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
+        Logger.Log($"{player.Name} passed away. RIP.");
         player.MoveTo(0);
     }
 }

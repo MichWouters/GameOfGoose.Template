@@ -11,6 +11,7 @@ internal class End(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
+        Logger.Log($"{player.Name} won! Game over!");
         player.SetWinner();
     }
 }

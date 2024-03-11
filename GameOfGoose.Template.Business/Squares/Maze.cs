@@ -11,6 +11,7 @@ internal class Maze(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
+        Logger.Log($"{player.Name} has gotten themselves lost in the maze. Move back to 39.");
         player.MoveTo(39);
     }
 }

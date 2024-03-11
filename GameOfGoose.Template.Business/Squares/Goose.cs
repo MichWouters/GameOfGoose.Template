@@ -11,6 +11,7 @@ internal class Goose(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
-        throw new NotImplementedException();
+        Logger.Log($"{player.Name} hit a goose and moved {player.DiceRolls.Sum()} again.");
+        player.Move(player.DiceRolls.Sum());
     }
 }

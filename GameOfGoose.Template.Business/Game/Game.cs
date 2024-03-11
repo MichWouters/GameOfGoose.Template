@@ -1,7 +1,6 @@
 ﻿using GameOfGoose.Template.Business.Boards;
 using GameOfGoose.Template.Business.Factories;
 using GameOfGoose.Template.Business.Players;
-using GameOfGoose.Template.Business.Squares;
 
 namespace GameOfGoose.Template.Business.Game;
 
@@ -29,7 +28,14 @@ public class Game(IGameBoard board, IPlayerFactory factory, ILogger logger, int 
     {
         foreach (IPlayer player in Players)
         {
-            player.RollDice(Turn == 1);
+            if (player.IsStuckInWell || player.TurnsToSkip > 0)
+            {
+                player.SkipTurn();
+            }
+            else
+            {
+                player.RollDice(Turn == 1);
+            }
 
             if (player.IsWinner)
             {

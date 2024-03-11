@@ -11,5 +11,7 @@ internal class Prison(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
+        Logger.Log($"{player.Name} has been imprisoned for their crimes. Skip three turns");
+        player.TurnsToSkip = 3;
     }
 }
