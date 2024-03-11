@@ -1,53 +1,59 @@
-﻿using GameOfGoose.Template.Business.Boards;
-using GameOfGoose.Template.Business.Factories;
+﻿using GameOfGoose.Template.Business.Factories;
 using GameOfGoose.Template.Business.Players;
 
 namespace GameOfGoose.Template.Business.Game;
 
-public class Game(IGameBoard board, IPlayerFactory factory, ILogger logger, int amountOfPlayers = 2)
+public class Game(IPlayerFactory factory, ILogger logger)
 {
-    public List<IPlayer> Players = factory.CreatePlayers(amountOfPlayers);
-    public IGameBoard Board { get; private set; } = board;
+    public IPlayer[] Players;
+
     public bool HasGameEnded { get; private set; }
-    public int Turn { get; private set; } = 1;
+    public int Turn { get; set; } = 1;
 
-    private ILogger _logger = logger;
-
-    public void PlayGame()
+    public void PlayGame(int amountOfPlayers = 2)
     {
+        Players = factory.CreatePlayers(amountOfPlayers);
         while (!HasGameEnded)
         {
             PlayTurn();
             EndTurn();
         }
 
-        _logger.Log("Game over");
+        logger.Log("Game over");
     }
 
-    private void PlayTurn()
+    public void PlayTurn()
     {
         foreach (IPlayer player in Players)
         {
-            if (player.IsStuckInWell || player.TurnsToSkip > 0)
-            {
-                player.SkipTurn();
-            }
-            else
-            {
-                player.RollDice(Turn == 1);
-            }
-
-            if (player.IsWinner)
-            {
-                HasGameEnded = true;
-                break;
-            }
+            HandleTurn(player);
+            if (WinnerExists(player)) break;
         }
     }
 
     private void EndTurn()
     {
-        _logger.Log("Turn ended");
+        logger.Log("Turn ended");
         Turn++;
+    }
+
+    private void HandleTurn(IPlayer player)
+    {
+        if (player.IsStuckInWell || player.TurnsToSkip > 0)
+        {
+            player.SkipTurn();
+        }
+        else
+        {
+            player.RollDice(Turn == 1);
+        }
+    }
+
+    private bool WinnerExists(IPlayer player)
+    {
+        if (!player.IsWinner) return false;
+
+        HasGameEnded = true;
+        return true;
     }
 }

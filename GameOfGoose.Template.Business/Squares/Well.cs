@@ -14,12 +14,12 @@ namespace GameOfGoose.Template.Business.Squares
         public void HandlePlayer(IPlayer player)
         {
             Logger.Log($"Sploosh! {player.Name} fell down the well! Go get help, Lassie!");
-            player.IsStuckInWell = false;
+            player.IsStuckInWell = true;
 
             if (TrappedPlayer is not null)
             {
                 Logger.Log($"using {player.Name}'s head as a booster, {TrappedPlayer.Name} was able to escape from the well!");
-                TrappedPlayer.IsStuckInWell = true;
+                TrappedPlayer.IsStuckInWell = false;
             }
             
             TrappedPlayer = player;

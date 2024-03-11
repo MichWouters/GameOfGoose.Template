@@ -12,7 +12,7 @@
 
         void Move(int roll);
         void MoveTo(int destination);
-        void RollDice(bool firstTurn = false);
+        void RollDice(bool isFirstTurn = false);
         void SetWinner();
         void SkipTurn();
     }

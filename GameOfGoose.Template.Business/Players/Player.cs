@@ -6,7 +6,7 @@ namespace GameOfGoose.Template.Business.Players
 {
     public class Player : IPlayer
     {
-        private static int _count;
+        private static int _count = 1;
         private ISquare? _currentSquare;
         private IDiceRoller _diceRoller;
         private IGameBoard _gameBoard;
@@ -23,10 +23,10 @@ namespace GameOfGoose.Template.Business.Players
 
         public int[] DiceRolls { get; private set; }
         public bool IsMovingBackWards { get; set; }
+        public bool IsStuckInWell { get; set; }
         public bool IsWinner { get; private set; }
         public string Name { get; } = $"Player {_count}";
         public int Position { get; private set; }
-        public bool IsStuckInWell { get; set; }
         public int TurnsToSkip { get; set; }
 
         public void Move(int roll)
@@ -41,11 +41,19 @@ namespace GameOfGoose.Template.Business.Players
             HandleEnterSquare();
         }
 
-        public void RollDice(bool firstTurn)
+        public void RollDice(bool isFirstTurn)
         {
             int[] result = _diceRoller.RollDice();
             DiceRolls = result;
-            Move(result.Sum());
+
+            if (isFirstTurn && DiceRolls.Sum() == 9)
+            {
+                HandleFirstTurnExceptions();
+            }
+            else
+            {
+                Move(result.Sum());
+            }
         }
 
         public void SetWinner()
@@ -65,6 +73,18 @@ namespace GameOfGoose.Template.Business.Players
         {
             _currentSquare = _gameBoard.GetSquare(Position);
             _currentSquare.HandlePlayer(this);
+        }
+
+        private void HandleFirstTurnExceptions()
+        {
+            if (DiceRolls.Contains(5) && DiceRolls.Contains(4))
+            {
+                MoveTo(26);
+            }
+            else if (DiceRolls.Contains(6) && DiceRolls.Contains(3))
+            {
+                MoveTo(53);
+            }
         }
     }
 }

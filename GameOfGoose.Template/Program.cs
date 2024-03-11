@@ -14,5 +14,18 @@ var serviceProvider = new ServiceCollection()
     .BuildServiceProvider();
 
 var game = serviceProvider.GetRequiredService<Game>();
-game.PlayGame();
+SetupPlayers(game);
+void SetupPlayers(Game game)
+{
+    Console.WriteLine("How many players are playing?");
 
+    if (int.TryParse(Console.ReadLine(), out int amountOfPlayers))
+    {
+        game.PlayGame(amountOfPlayers);
+    }
+    else
+    {
+        Console.WriteLine("Invalid number. Please try again");
+        SetupPlayers(game);
+    }
+}

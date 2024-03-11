@@ -8,7 +8,7 @@
         public void WhenDiceAreRolled_PlayerShouldMoveTheAmountOfDiceRolled()
         {
             // Arrange
-            var player = _helper.SetupTestCase(8, [2, 2]);
+            var player = _helper.SetupTestPlayer(8, [2, 2]);
 
             // Act
             player.RollDice();
@@ -23,7 +23,7 @@
         public void WhenPlayerMoveToIsCalled_PlayerShouldMoveToThatExactLocation(int start, int destination)
         {
             // Arrange
-            var player = _helper.SetupTestCase(start, null);
+            var player = _helper.SetupTestPlayer(start, null);
 
             // Act
             player.MoveTo(destination);

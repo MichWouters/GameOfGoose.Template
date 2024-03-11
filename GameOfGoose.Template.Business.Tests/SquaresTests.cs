@@ -10,7 +10,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void BridgeShouldMovePlayerToSquare12()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(2, [2, 2]);
+            IPlayer player = _helper.SetupTestPlayer(2, [2, 2]);
 
             // Act
             player.RollDice();
@@ -24,7 +24,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void MazeShouldMovePlayerToSquare39()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(40, [1, 1]);
+            IPlayer player = _helper.SetupTestPlayer(40, [1, 1]);
 
             // Act
             player.RollDice();
@@ -38,7 +38,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void DeathShouldMovePlayerBackToStart()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(56, [1, 1]);
+            IPlayer player = _helper.SetupTestPlayer(56, [1, 1]);
 
             // Act
             player.RollDice();
@@ -52,7 +52,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void WhenPlayerLandsOnEnd_PlayerIsPronouncedWinner()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(56, [6,1]);
+            IPlayer player = _helper.SetupTestPlayer(56, [6,1]);
 
             // Act
             player.RollDice();
@@ -65,7 +65,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void WhenPlayerDoesNotLandOnEnd_PlayerIsNotPronouncedWinner()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(13, [4, 3]);
+            IPlayer player = _helper.SetupTestPlayer(13, [4, 3]);
 
             // Act
             player.RollDice();
@@ -78,7 +78,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void WhenPlayerLandsOnInn_SkipOneTurn()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(12, [4, 3]);
+            IPlayer player = _helper.SetupTestPlayer(12, [4, 3]);
 
             // Act
             player.RollDice();
@@ -91,7 +91,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void WhenPlayerLandsOnPrison_SkipThreeTurns()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(47, [2, 3]);
+            IPlayer player = _helper.SetupTestPlayer(47, [2, 3]);
 
             // Act
             player.RollDice();
@@ -101,25 +101,25 @@ namespace GameOfGoose.Template.Business.Tests
         }
 
         [Fact]
-        public void WhenPlayerLandsOnWell_CanMoveIsFalse()
+        public void WhenPlayerLandsOnWell_StuckInWellIsTrue()
         {
             // Arrange
-            IPlayer player = _helper.SetupTestCase(28, [2, 1]);
+            IPlayer player = _helper.SetupTestPlayer(28, [2, 1]);
 
             // Act
             player.RollDice();
 
             // Assert
-            Assert.False(player.IsStuckInWell);
+            Assert.True(player.IsStuckInWell);
         }
 
         [Fact]
         public void WhenPlayerLandsOnWell_SkipTurnsUntilNextPlayerLandsOnWell()
         {
             // Arrange
-            IPlayer player1 = _helper.SetupTestCase(28, [2, 1]);
-            IPlayer player2 = _helper.SetupTestCase(28, [2, 1]);
-            IPlayer player3 = _helper.SetupTestCase(28, [2, 1]);
+            IPlayer player1 = _helper.SetupTestPlayer(28, [2, 1]);
+            IPlayer player2 = _helper.SetupTestPlayer(28, [2, 1]);
+            IPlayer player3 = _helper.SetupTestPlayer(28, [2, 1]);
 
             // Trap player 1
             player1.RollDice();

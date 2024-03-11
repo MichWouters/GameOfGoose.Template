@@ -6,6 +6,6 @@ namespace GameOfGoose.Template.Business.Factories
     {
         IPlayer CreatePlayer(int position);
 
-        List<IPlayer> CreatePlayers(int amountOfPlayers);
+        IPlayer[] CreatePlayers(int amountOfPlayers);
     }
 }

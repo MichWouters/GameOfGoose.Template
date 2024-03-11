@@ -12,7 +12,7 @@ public class GooseTests
     public void WhenPlayerLandsOnGoose_GooseSendsForward(int startPosition, int[] diceRolls, int expectedPosition)
     {
         // Arrange
-        IPlayer player = _helper.SetupTestCase(startPosition, diceRolls);
+        IPlayer player = _helper.SetupTestPlayer(startPosition, diceRolls);
 
         // Act
         player.RollDice();
@@ -28,7 +28,7 @@ public class GooseTests
     public void WhenPlayerLandsOnMultipleGeese_PlayerKeepsMoving(int startPosition, int[] diceRolls, int expectedPosition)
     {
         // Arrange
-        IPlayer player = _helper.SetupTestCase(startPosition, diceRolls);
+        IPlayer player = _helper.SetupTestPlayer(startPosition, diceRolls);
 
         // Act
         player.RollDice();
@@ -43,7 +43,7 @@ public class GooseTests
     public void WhenPlayerPassesGoose_ButDoesNotLandOnGoose_GooseActionIsNotTriggered(int startPosition, int[] diceRolls, int expectedPosition)
     {
         // Arrange
-        IPlayer player = _helper.SetupTestCase(startPosition, diceRolls);
+        IPlayer player = _helper.SetupTestPlayer(startPosition, diceRolls);
 
         // Act
         player.RollDice();
@@ -60,7 +60,7 @@ public class GooseTests
     public void WhenPlayerLandsOnGoose_AndReverseMovementIsTrue_GooseSendsPlayerBackwards(int startPosition, int[] diceRolls, int expectedPosition)
     {
         // Arrange
-        IPlayer player = _helper.SetupTestCase(startPosition, diceRolls);
+        IPlayer player = _helper.SetupTestPlayer(startPosition, diceRolls);
         player.IsMovingBackWards = true;
 
         // Act
@@ -79,7 +79,7 @@ public class GooseTests
     public void WhenPlayerPassesSquare63_AndLandsOnGoose_GooseSendsBackwards(int startPosition, int[] diceRolls, int expectedPosition)
     {
         // Arrange
-        IPlayer player = _helper.SetupTestCase(startPosition, diceRolls);
+        IPlayer player = _helper.SetupTestPlayer(startPosition, diceRolls);
 
         // Act
         player.RollDice();
@@ -96,7 +96,7 @@ public class GooseTests
     public void WhenPlayerLandsOnGoose_AndReverseMovementIsTrue_AndNewPositionIsLessThan0_NewPositionIs0(int startPosition, int[] diceRolls)
     {
         // Arrange
-        IPlayer player = _helper.SetupTestCase(startPosition, diceRolls);
+        IPlayer player = _helper.SetupTestPlayer(startPosition, diceRolls);
         player.IsMovingBackWards = true;
 
         // Act
