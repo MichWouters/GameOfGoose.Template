@@ -1,17 +1,16 @@
-﻿using GameOfGoose.Template.Business.Boards;
-using GameOfGoose.Template.Business.Game;
-using GameOfGoose.Template.Business.Players;
-using Moq;
+﻿using GameOfGoose.Template.Business.Players;
 
 namespace GameOfGoose.Template.Business.Tests
 {
     public class SquaresTests
     {
+        private PlayerHelper _helper = new PlayerHelper();
+
         [Fact]
         public void BridgeShouldMovePlayerToSquare12()
         {
             // Arrange
-            IPlayer player = SetupPlayer(2, [1, 3]);
+            IPlayer player = _helper.SetupTestCase(2, [2, 2]);
 
             // Act
             player.RollDice();
@@ -25,7 +24,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void MazeShouldMovePlayerToSquare39()
         {
             // Arrange
-            IPlayer player = SetupPlayer(40, [1, 1]);
+            IPlayer player = _helper.SetupTestCase(40, [1, 1]);
 
             // Act
             player.RollDice();
@@ -39,7 +38,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void DeathShouldMovePlayerBackToStart()
         {
             // Arrange
-            IPlayer player = SetupPlayer(56, [1, 1]);
+            IPlayer player = _helper.SetupTestCase(56, [1, 1]);
 
             // Act
             player.RollDice();
@@ -53,27 +52,13 @@ namespace GameOfGoose.Template.Business.Tests
         public void WhenPlayerLandsOnEnd_PlayerIsPronouncedWinner()
         {
             // Arrange
-            IPlayer player = SetupPlayer(56, [6,1]);
+            IPlayer player = _helper.SetupTestCase(56, [6,1]);
 
             // Act
             player.RollDice();
 
             // Assert
             Assert.True(player.IsWinner);
-            //Assert.True(Game.Instance.HasGameEnded == true);
-        }
-
-        private IPlayer SetupPlayer(int startPosition, int[]diceRoll)
-        {
-            Mock<IDiceRoller> diceMock = new();
-            diceMock
-                .Setup(x => x.RollDice(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(diceRoll);
-
-            Mock<IGameBoard> gameBoardMock = new();
-
-            IPlayer player = new Player(diceMock.Object, gameBoardMock.Object, startPosition);
-            return player;
         }
     }
 }

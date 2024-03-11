@@ -2,9 +2,11 @@
 {
     public interface IPlayer
     {
+        int[] DiceRolls { get; }
+
         bool IsWinner { get; }
 
-        string Name { get; set; }
+        string Name { get; }
 
         int Position { get; }
 

@@ -7,36 +7,55 @@ namespace GameOfGoose.Template.Business.Boards
 {
     public class GameBoard : IGameBoard
     {
-
-        private readonly ISquareFactory _factory;
-
         private readonly BoardConfiguration _config;
-
-        private readonly int[] _geeseSquares = [4, 8, 13, 17, 22, 26, 31, 35, 40, 44, 49, 53, 58];
+        private readonly ISquareFactory _factory;
+        private readonly int[] _geeseSquares = [5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59];
 
         private readonly Dictionary<int, SquareType> _specialSquares = new()
         {
             { 0, SquareType.Start },
-            { 5, SquareType.Bridge },
-            { 18, SquareType.Inn },
-            { 30, SquareType.Well },
-            { 41, SquareType.Maze },
-            { 51, SquareType.Prison },
-            { 57, SquareType.Death },
-            { 62, SquareType.End },
+            { 6, SquareType.Bridge },
+            { 19, SquareType.Inn },
+            { 31, SquareType.Well },
+            { 42, SquareType.Maze },
+            { 52, SquareType.Prison },
+            { 58, SquareType.Death },
+            { 63, SquareType.End },
         };
 
         private readonly List<ISquare> _squares;
 
-        public GameBoard(ILogger logger)
+        public GameBoard(ILogger logger, bool useJsonConfig = true)
         {
             _factory = new SquareFactory(logger);
             _squares = [];
-            _config = GetDataFromJson("Boards/StandardBoard.json");
+
+            if (useJsonConfig)
+            {
+                // Alternative way -> Use JSON configs instead of hardcoding
+                _config = GetDataFromJson("Boards/StandardBoard.json");
+            }
+            else
+            {
+                // Standard way -> Hard code values
+                _config = new BoardConfiguration
+                {
+                    AmountOfSquares = 64,
+                    GeeseSquares = _geeseSquares,
+                    SpecialSquares = _specialSquares
+                };
+            }
+
             CreateBoard(_config);
         }
 
-        public void CreateBoard(BoardConfiguration config)
+        public ISquare GetSquare(int index)
+        {
+            return _squares.ElementAtOrDefault(index)
+                   ?? throw new ArgumentOutOfRangeException(nameof(index), "Square could not be found");
+        }
+
+        private void CreateBoard(BoardConfiguration config)
         {
             _squares.Clear();
 
@@ -44,12 +63,6 @@ namespace GameOfGoose.Template.Business.Boards
             {
                 _squares.Add(CreateSquare(i));
             }
-        }
-
-        public ISquare GetSquare(int index)
-        {
-            return _squares.ElementAtOrDefault(index)
-                   ?? throw new ArgumentOutOfRangeException(nameof(index), "Square could not be found");
         }
 
         private ISquare CreateSquare(int index)

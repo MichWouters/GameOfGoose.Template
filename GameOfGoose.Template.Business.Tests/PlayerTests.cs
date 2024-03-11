@@ -1,17 +1,14 @@
-﻿using GameOfGoose.Template.Business.Boards;
-using GameOfGoose.Template.Business.Game;
-using GameOfGoose.Template.Business.Players;
-using Moq;
-
-namespace GameOfGoose.Template.Business.Tests
+﻿namespace GameOfGoose.Template.Business.Tests
 {
     public class PlayerTests
     {
+        private readonly PlayerHelper _helper = new();
+
         [Fact]
         public void WhenDiceAreRolled_PlayerShouldMoveTheAmountOfDiceRolled()
         {
             // Arrange
-            var player = SetupPlayer(8, [2,2]);
+            var player = _helper.SetupTestCase(8, [2, 2]);
 
             // Act
             player.RollDice();
@@ -26,7 +23,7 @@ namespace GameOfGoose.Template.Business.Tests
         public void WhenPlayerMoveToIsCalled_PlayerShouldMoveToThatExactLocation(int start, int destination)
         {
             // Arrange
-            var player = SetupPlayer(start, null);
+            var player = _helper.SetupTestCase(start, null);
 
             // Act
             player.MoveTo(destination);
@@ -34,19 +31,6 @@ namespace GameOfGoose.Template.Business.Tests
             // Assert
             Assert.Equal(destination, player.Position);
             Assert.NotEqual(start, player.Position);
-        }
-
-        private IPlayer SetupPlayer(int startPosition, int[]? diceRoll)
-        {
-            Mock<IDiceRoller> diceMock = new();
-            diceMock
-                .Setup(x => x.RollDice(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(diceRoll);
-
-            Mock<IGameBoard> gameBoardMock = new();
-
-            IPlayer player = new Player(diceMock.Object, gameBoardMock.Object, startPosition);
-            return player;
         }
     }
 }

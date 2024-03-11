@@ -24,8 +24,11 @@ namespace GameOfGoose.Template.Business.Players
             _currentSquare = _gameBoard.GetSquare(0);
         }
 
+        public int[] DiceRolls { get; private set; }
+
         public bool IsWinner { get; private set; }
-        public string Name { get; set; } = $"Player {_count}";
+
+        public string Name { get; } = $"Player {_count}";
 
         public int Position { get; private set; }
 
@@ -38,6 +41,7 @@ namespace GameOfGoose.Template.Business.Players
         public void RollDice(bool firstTurn)
         {
             int[] result = _diceRoller.RollDice();
+            DiceRolls = result;
             Move(result.Sum());
         }
 

@@ -1,6 +1,6 @@
 {
-  "GeeseSquares": [ 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59 ],
   "AmountOfSquares": 64,
+  "GeeseSquares": [ 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59 ],
   "SpecialSquares": {
     "0": "Start",
     "6": "Bridge",
