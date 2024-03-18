@@ -2,6 +2,7 @@
 {
     public interface IPlayer
     {
+        public bool CanMove { get; }
         int[] DiceRolls { get; }
         bool IsMovingBackWards { get; set; }
         bool IsWinner { get; }

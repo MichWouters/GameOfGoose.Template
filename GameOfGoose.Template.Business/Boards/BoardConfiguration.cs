@@ -6,8 +6,8 @@ namespace GameOfGoose.Template.Business.Boards
     {
         public int AmountOfSquares { get; set; }
 
-        public int[] GeeseSquares { get; set; }
+        public required int[] GeeseSquares { get; set; }
 
-        public IDictionary<int, SquareType> SpecialSquares { get; set; }
+        public required IDictionary<int, SquareType> SpecialSquares { get; set; }
     }
 }

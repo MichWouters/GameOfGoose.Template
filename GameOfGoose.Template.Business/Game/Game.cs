@@ -1,5 +1,6 @@
 ﻿using GameOfGoose.Template.Business.Factories;
 using GameOfGoose.Template.Business.Players;
+using System.Security.Authentication;
 
 namespace GameOfGoose.Template.Business.Game;
 
@@ -33,21 +34,15 @@ public class Game(IPlayerFactory factory, ILogger logger)
 
     private void EndTurn()
     {
-        logger.Log("Turn ended");
+        logger.Log("Press Enter to end turn");
+        Console.ReadLine();
         logger.Log("");
         Turn++;
     }
 
     private void HandleTurn(IPlayer player)
     {
-        if (player.IsStuckInWell || player.TurnsToSkip > 0)
-        {
-            player.SkipTurn();
-        }
-        else
-        {
-            player.RollDice(Turn == 1);
-        }
+        player.RollDice(Turn == 1);
     }
 
     private bool WinnerExists(IPlayer player)

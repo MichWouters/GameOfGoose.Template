@@ -32,5 +32,22 @@
             Assert.Equal(destination, player.Position);
             Assert.NotEqual(start, player.Position);
         }
+
+        [Theory]
+        [InlineData(61, new[] {2,3}, 60)]
+        [InlineData(62, new[] {1,1}, 62)]
+        [InlineData(57, new[] {1,6}, 62)]
+        public void WhenPlayerOvershootsLastSquare_PlayerShouldMoveTheOvershotAmountBackwards(int start, int[]roll,  int expectedLocation)
+        {
+            // Arrange
+            var player = _helper.SetupTestPlayer(start, roll);
+
+            // Act
+            player.RollDice();
+
+            // Assert
+            Assert.Equal(expectedLocation, player.Position);
+            Assert.False(player.IsMovingBackWards);
+        }
     }
 }

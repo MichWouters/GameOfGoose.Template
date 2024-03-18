@@ -114,6 +114,22 @@ namespace GameOfGoose.Template.Business.Tests
         }
 
         [Fact]
+        public void WhenPlayerIsStuckInWell_HeCannotMove()
+        {
+            // Arrange
+            IPlayer player = _helper.SetupTestPlayer(28, [2, 1]);
+
+            // Act & Assert
+            player.RollDice();
+            Assert.True(player.IsStuckInWell);
+            Assert.Equal(31, player.Position);
+
+            player.RollDice();
+            Assert.True(player.IsStuckInWell);
+            Assert.Equal(31, player.Position);
+        }
+
+        [Fact]
         public void WhenPlayerLandsOnWell_SkipTurnsUntilNextPlayerLandsOnWell()
         {
             // Arrange

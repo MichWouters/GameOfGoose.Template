@@ -49,10 +49,12 @@ namespace GameOfGoose.Template.Business.Boards
             CreateBoard(_config);
         }
 
+        public int AmountOfSquares => _squares.Count - 1;
+
         public ISquare GetSquare(int index)
         {
             return _squares.ElementAtOrDefault(index)
-                   ?? throw new ArgumentOutOfRangeException(nameof(index), "Square could not be found");
+                   ?? throw new ArgumentOutOfRangeException(nameof(index), $"Square {index} could not be found");
         }
 
         private void CreateBoard(BoardConfiguration config)

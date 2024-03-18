@@ -50,7 +50,7 @@ public class GameTests
     }
 
     [Fact]
-    public void WhenTurnEnds_PlayerThatHaveTurnsToBeSkipped_GetDecreasedByOne()
+    public void WhenTurnEnds_PlayersThatHaveTurnsToBeSkipped_GetDecreasedByOne()
     {
         // Arrange
         IPlayer player1 = _helper.SetupTestPlayer(5, [4, 4]);

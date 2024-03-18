@@ -11,7 +11,8 @@ internal class Goose(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
-        Logger.Log($"{player.Name} hit a goose on {Index} and moved {player.DiceRolls.Sum()} again.");
+        string suffix = player.IsMovingBackWards ? "backwards" : "again";
+        Logger.Log($"{player.Name} hit a goose on {Index} and moved {player.DiceRolls.Sum()} {suffix}.");
         player.Move(player.DiceRolls.Sum());
     }
 }
