@@ -10,7 +10,7 @@ public class Game(IPlayerFactory factory, ILogger logger)
     public bool HasGameEnded { get; private set; }
     public int Turn { get; set; } = 1;
 
-    public void PlayGame(int amountOfPlayers = 2)
+    public void PlayGame(uint amountOfPlayers = 2)
     {
         Players = factory.CreatePlayers(amountOfPlayers);
         while (!HasGameEnded)
@@ -34,6 +34,7 @@ public class Game(IPlayerFactory factory, ILogger logger)
     private void EndTurn()
     {
         logger.Log("Turn ended");
+        logger.Log("");
         Turn++;
     }
 

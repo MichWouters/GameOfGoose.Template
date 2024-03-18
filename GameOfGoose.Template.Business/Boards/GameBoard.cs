@@ -79,10 +79,9 @@ namespace GameOfGoose.Template.Business.Boards
             return _factory.Create(index, SquareType.Regular);
         }
 
-        private BoardConfiguration GetDataFromJson(string fileName)
+        private BoardConfiguration GetDataFromJson(string filePath)
         {
-            string filePath = fileName;
-            if (!File.Exists(filePath)) throw new FileNotFoundException(nameof(fileName));
+            if (!File.Exists(filePath)) throw new FileNotFoundException(nameof(filePath));
 
             string jsonString = File.ReadAllText(filePath);
             BoardConfiguration boardConfig = JsonConvert.DeserializeObject<BoardConfiguration>(jsonString);

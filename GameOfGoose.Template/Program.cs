@@ -1,31 +1,48 @@
 ﻿using GameOfGoose.Template;
-using GameOfGoose.Template.Business.Boards;
-using GameOfGoose.Template.Business.Factories;
 using GameOfGoose.Template.Business.Game;
-using Microsoft.Extensions.DependencyInjection;
 
-var serviceProvider = new ServiceCollection()
-        .AddSingleton<IGameBoard, GameBoard>()
-        .AddTransient<ISquareFactory, SquareFactory>()
-        .AddTransient<IPlayerFactory, PlayerFactory>()
-        .AddTransient<IDiceRoller, DiceRoller>()
-        .AddTransient<ILogger, Logger>()
-        .AddSingleton<Game>()
-    .BuildServiceProvider();
+var startup = new Startup();
+var game = startup.SetupGame();
 
-var game = serviceProvider.GetRequiredService<Game>();
-SetupPlayers(game);
-void SetupPlayers(Game game)
+PrintTitle();
+uint amountOfPlayers = GetPlayers(game);
+game.PlayGame(amountOfPlayers);
+uint GetPlayers(Game game)
 {
     Console.WriteLine("How many players are playing?");
 
-    if (int.TryParse(Console.ReadLine(), out int amountOfPlayers))
+    if (uint.TryParse(Console.ReadLine(), out uint amountOfPlayers))
     {
-        game.PlayGame(amountOfPlayers);
+        if (amountOfPlayers is 0 or > 4)
+        {
+            Console.WriteLine("Game needs between one and four players. Try again");
+            return GetPlayers(game);
+        }
+
+        return amountOfPlayers;
     }
     else
     {
         Console.WriteLine("Invalid number. Please try again");
-        SetupPlayers(game);
+        return GetPlayers(game);
     }
+}
+
+void PrintTitle()
+{
+    string text =
+        """
+          ________                               ________
+         /  _____/  ____   ____  ______ ____    /  _____/_____    _____   ____
+        /   \  ___ /  _ \ /  _ \/  ___// __ \  /   \  ___\__  \  /     \_/ __ \
+        \    \_\  (  <_> |  <_> )___ \\  ___/  \    \_\  \/ __ \|  Y Y  \  ___/
+         \______  /\____/ \____/____  >\___  >  \______  (____  /__|_|  /\___  >
+                \/                  \/     \/          \/     \/      \/     \/
+        """;
+
+    var randomColor = new Random().Next(0, 16);
+    Console.ForegroundColor = (ConsoleColor)randomColor;
+
+    Console.WriteLine(text);
+    Console.ResetColor();
 }

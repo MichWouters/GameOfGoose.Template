@@ -5,14 +5,14 @@ using GameOfGoose.Template.Business.Players;
 namespace GameOfGoose.Template.Business.Factories;
 
 // Create a PlayerFactory to encapsulate the dependency Injection for creating players
-public class PlayerFactory(IDiceRoller diceRoller, IGameBoard gameBoard) : IPlayerFactory
+public class PlayerFactory(IDiceRoller diceRoller, ILogger logger, IGameBoard gameBoard) : IPlayerFactory
 {
     public IPlayer CreatePlayer(int position)
     {
-        return new Player(diceRoller, gameBoard, position);
+        return new Player(diceRoller,logger, gameBoard, position);
     }
 
-    public IPlayer[] CreatePlayers(int amountOfPlayers)
+    public IPlayer[] CreatePlayers(uint amountOfPlayers)
     {
         IPlayer[] players = new IPlayer[amountOfPlayers];
 

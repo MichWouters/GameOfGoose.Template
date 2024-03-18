@@ -24,7 +24,7 @@ namespace GameOfGoose.Template.Business.Tests
                 .Setup(x => x.RollDice(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(diceRoll);
 
-            IPlayer player = new Player(diceMock.Object, _gameBoard, startPosition);
+            IPlayer player = new Player(diceMock.Object, _mockLogger.Object, _gameBoard, startPosition);
             return player;
         }
 

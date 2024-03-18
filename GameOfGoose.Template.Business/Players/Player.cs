@@ -9,12 +9,14 @@ namespace GameOfGoose.Template.Business.Players
         private static int _count = 1;
         private ISquare? _currentSquare;
         private IDiceRoller _diceRoller;
+        private ILogger _logger;
         private IGameBoard _gameBoard;
 
-        public Player(IDiceRoller diceRoller, IGameBoard gameBoard, int position)
+        public Player(IDiceRoller diceRoller, ILogger logger, IGameBoard gameBoard, int position)
         {
             _count++;
             _diceRoller = diceRoller;
+            _logger = logger;
             _gameBoard = gameBoard;
 
             Position = position;
@@ -46,13 +48,16 @@ namespace GameOfGoose.Template.Business.Players
             int[] result = _diceRoller.RollDice();
             DiceRolls = result;
 
-            if (isFirstTurn && DiceRolls.Sum() == 9)
+            int roll = result.Sum();
+            _logger.Log($"{Name} rolled {roll}.");
+
+            if (isFirstTurn && roll == 9)
             {
                 HandleFirstTurnExceptions();
             }
             else
             {
-                Move(result.Sum());
+                Move(roll);
             }
         }
 
@@ -66,6 +71,7 @@ namespace GameOfGoose.Template.Business.Players
             if (TurnsToSkip > 0 && !IsStuckInWell)
             {
                 TurnsToSkip--;
+                _logger.Log($"{Name} skipped a turn. {TurnsToSkip} turns left to skip.");
             }
         }
 

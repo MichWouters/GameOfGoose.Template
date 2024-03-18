@@ -11,6 +11,6 @@ internal class Regular(ILogger logger, int index) : ISquare
 
     public void HandlePlayer(IPlayer player)
     {
-        Logger.Log($"player {player.Name} entered Regular square {Index}");
+        Logger.Log($"{player.Name} entered Regular square {Index}");
     }
 }
